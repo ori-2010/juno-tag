@@ -1,6 +1,6 @@
 # juno-tag
 > 🛑 This project is proprietary. No license is granted. All rights reserved.
-welcome to juno tag an ai second brain app
+> welcome to juno tag an ai second brain app
 > the app does these five things:
 1. organizes note and vlutter so you can have a more organized and stress free life
 2. syncs with icloud so you can access it from any device
