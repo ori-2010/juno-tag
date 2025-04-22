@@ -1,0 +1,125 @@
+// JunoTagApp.swift
+import SwiftUI
+
+@main
+struct JunoTagApp: App {
+    var body: some Scene {
+        WindowGroup {
+            MainTabView()
+        }
+    }
+}
+
+// MainTabView.swift
+import SwiftUI
+
+struct MainTabView: View {
+    var body: some View {
+        TabView {
+            NotesView()
+                .tabItem {
+                    Label("Notes", systemImage: "note.text")
+                }
+
+            TagsView()
+                .tabItem {
+                    Label("Tags", systemImage: "tag")
+                }
+
+            ChatView()
+                .tabItem {
+                    Label("Chat", systemImage: "bubble.left")
+                }
+
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
+        }
+    }
+}
+
+// NotesView.swift
+import SwiftUI
+
+struct NotesView: View {
+    @State private var notes: [Note] = []
+    
+    var body: some View {
+        NavigationView {
+            List(notes) { note in
+                VStack(alignment: .leading) {
+                    Text(note.title).font(.headline)
+                    Text(note.content).font(.subheadline).foregroundColor(.secondary)
+                }
+            }
+            .navigationTitle("Notes")
+            .toolbar {
+                Button(action: addNote) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+    }
+
+    func addNote() {
+        notes.append(Note(title: "New Note", content: "", id: UUID()))
+    }
+}
+
+// TagsView.swift
+import SwiftUI
+
+struct TagsView: View {
+    var body: some View {
+        Text("Tags")
+    }
+}
+
+// ChatView.swift
+import SwiftUI
+
+struct ChatView: View {
+    @State private var userInput = ""
+    @State private var messages: [String] = []
+
+    var body: some View {
+        VStack {
+            List(messages, id: \ .self) { message in
+                Text(message)
+            }
+            HStack {
+                TextField("Ask something...", text: $userInput)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                Button("Send") {
+                    sendMessage()
+                }
+            }
+            .padding()
+        }
+    }
+
+    func sendMessage() {
+        messages.append("You: \(userInput)")
+        // Insert GPT API call logic here
+        userInput = ""
+    }
+}
+
+// SettingsView.swift
+import SwiftUI
+
+struct SettingsView: View {
+    var body: some View {
+        Text("Settings")
+    }
+}
+
+// Note.swift
+import Foundation
+
+struct Note: Identifiable {
+    var title: String
+    var content: String
+    var id: UUID
+}
